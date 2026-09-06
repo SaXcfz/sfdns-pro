@@ -111,7 +111,7 @@ object WireGuardConfigCodec {
 
     /** یک بلوک تکی wg-quick را با پارسر رسمی کتابخانه اعتبارسنجی و تبدیل می‌کند. */
     fun wgQuickTextToProfile(text: String, nameHint: String? = null): WireGuardProfile {
-        val config = Config.parse(java.io.StringReader(text))
+        val config = Config.parse(java.io.BufferedReader(java.io.StringReader(text)))
         val iface = config.`interface`
         val peer = config.peers.firstOrNull()
 
@@ -153,5 +153,5 @@ object WireGuardConfigCodec {
 
     /** به Config رسمی کتابخانه تبدیل می‌کند (لازم برای اتصال با GoBackend). */
     fun profileToConfig(profile: WireGuardProfile): Config =
-        Config.parse(java.io.StringReader(profileToWgQuickText(profile)))
+        Config.parse(java.io.BufferedReader(java.io.StringReader(profileToWgQuickText(profile))))
 }
